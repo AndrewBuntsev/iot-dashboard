@@ -1,0 +1,37 @@
+# Node modules
+**/node_modules/
+
+# Logs
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+**/dist/
+**/build/
+**/.next/
+**/out/
+**/coverage/
+
+# Environment variables
+**/.env
+**/.env.*
+
+# Docker
+*.local
+docker-compose.override.yml
+
+# Couchbase data volume (if mapped locally)
+couchbase-data/
+
+# VSCode settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Ignore unwanted files from all subfolders
+**/wrong*
