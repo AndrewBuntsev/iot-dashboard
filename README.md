@@ -21,7 +21,7 @@ The system is composed of several services, orchestrated via Docker Compose:
 
 2. **Start all services:**
    ```bash
-   docker-compose up --build
+   docker-compose up -d
    ```
 
 3. **Access the UI:**
@@ -52,3 +52,28 @@ To stop all services and remove containers, run:
 ```bash
 docker-compose down
 ```
+
+## Troubleshooting
+
+If the UI is not working and the `api` container is down, check Couchbase at http://localhost:8091.  
+If you see a "Setup New Cluster" button instead of the login screen, it means the Couchbase init script failed. You’ll need to initialize the database manually:
+
+1. Click "Setup New Cluster"
+2. Enter:
+   - Cluster name: `default`
+   - Admin username: `admin`
+   - Password: `password`
+3. Tick "I accept the terms & conditions"
+4. Click "Finish With Defaults"
+5. In the left panel, go to "Buckets"
+6. Click "Add Bucket"
+7. Enter:
+   - Name: `telemetry`
+8. Click "Add Bucket"
+
+Now stop and restart the project:
+
+```bash
+```bash
+docker-compose down
+docker-compose up -d
