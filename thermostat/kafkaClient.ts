@@ -1,4 +1,5 @@
 import { Kafka } from 'kafkajs';
+import { TelemetryData } from './types/telemetryData';
 
 const kafka = new Kafka({
   clientId: 'thermostat-producer',
@@ -19,7 +20,7 @@ export const init = async () => {
 };
 
 // Publish telemetry data to Kafka topic
-export const publish = async (payload) => {
+export const publish = async (payload: TelemetryData) => {
   try {
     await producer.send({
       topic,
