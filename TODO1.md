@@ -42,9 +42,10 @@
 ## COUCHBASE
 
 - use a parameterised query?
+*DONE*
 
 - use a prepared statement?
- 
+*DONE* (Couchbase automatically prepares queries when using the SDK, so no need to do it manually)
 
 ## KAFKA
 
