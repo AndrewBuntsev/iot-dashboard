@@ -1,6 +1,7 @@
-import { execQuery } from '../dbClient.js';
+import { Request, Response, NextFunction } from 'express';
+import { execQuery } from '../dbClient';
 
-export const getTelemetry = async (req, res, next) => {
+export const getTelemetry = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Support comma-separated device IDs
     const deviceIds = req.params.device_ids.split(',');
@@ -10,7 +11,7 @@ export const getTelemetry = async (req, res, next) => {
     let timeFilter = '';
     if (req.query.period_sec) {
       const now = Math.floor(Date.now() / 1000);
-      const from = now - parseInt(req.query.period_sec, 10);
+      const from = now - parseInt(req.query.period_sec as string, 10);
       timeFilter = ` AND timestamp_epoch >= ${from}`;
     }
 

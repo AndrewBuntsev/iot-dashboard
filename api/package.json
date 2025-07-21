@@ -1,14 +1,20 @@
 {
   "name": "iot-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "tsx index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "couchbase": "^4.2.3",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.15",
+    "typescript": "^5.8.3"
   }
 }

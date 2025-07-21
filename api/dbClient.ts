@@ -1,7 +1,7 @@
-import couchbase from 'couchbase';
+import couchbase, { Cluster, Collection } from 'couchbase';
 
-let cluster;
-let telemetryCollection;
+let cluster: Cluster | null = null;
+let telemetryCollection: Collection | null = null;
 
 // Initialize Couchbase connection and create the telemetry collection with retry logic
 export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
@@ -17,7 +17,7 @@ export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
       telemetryCollection = bucket.defaultCollection();
       console.log('Connected to Couchbase and initialized telemetry collection');
       return;
-    } catch (err) {
+    } catch (err: any) {
       retries++;
       console.warn(`Couchbase connection failed (attempt ${retries}/${maxRetries}): ${err.message}`);
       if (retries >= maxRetries) {
@@ -29,7 +29,10 @@ export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
 };
 
 // Execute a query
-export const execQuery = async (query) => {
+export const execQuery = async (query: string) => {
+  if (!cluster) {
+    throw new Error('Couchbase cluster is not initialized. Call initCouchbase() first.');
+  }
   try {
     const result = await cluster.query(query);
     return result.rows;

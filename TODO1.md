@@ -16,6 +16,7 @@
 ## CODE
 
 - convert services to use typescript (you don't have to type everything)
+*DONE*
  
 
 ## TESTING

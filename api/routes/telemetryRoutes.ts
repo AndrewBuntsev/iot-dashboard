@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as telemetryController from '../controllers/telemetryController.js';
+import * as telemetryController from '../controllers/telemetryController';
 
 const router = Router();
 
