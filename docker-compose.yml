@@ -49,6 +49,16 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+  kowl:
+    image: redpandadata/console:latest
+    container_name: kowl
+    ports:
+      - "8080:8080"
+    environment:
+      - KAFKA_BROKERS=${MESSAGE_BROKER_HOST}
+    depends_on:
+      - kafka      
+
   thermostat:
     build:
       context: ./thermostat

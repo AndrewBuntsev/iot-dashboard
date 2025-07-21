@@ -49,6 +49,7 @@
 ## KAFKA
 
 - deploy a Kafka UI (e.g. Kowl)
+*DONE*
 
 - add a second partition (if you don't already have one)
 
