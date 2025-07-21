@@ -1,6 +1,7 @@
-import couchbase from 'couchbase';
+import couchbase, { Collection } from 'couchbase';
+import { TelemetryData } from './types/telemetryData';
 
-let telemetryCollection;
+let telemetryCollection: Collection | null = null;
 
 // Initialize Couchbase connection and create the telemetry collection with retry logic
 export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
@@ -16,7 +17,7 @@ export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
       telemetryCollection = bucket.defaultCollection();
       console.log('Connected to Couchbase and initialized telemetry collection');
       return;
-    } catch (err) {
+    } catch (err: any) {
       retries++;
       console.warn(`Couchbase connection failed (attempt ${retries}/${maxRetries}): ${err.message}`);
       if (retries >= maxRetries) {
@@ -28,7 +29,7 @@ export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
 };
 
 // Save telemetry data to Couchbase
-export const saveTelemetry = async (payload) => {
+export const saveTelemetry = async (payload: TelemetryData) => {
   if (!telemetryCollection) {
     throw new Error('Couchbase collection not initialized');
   }

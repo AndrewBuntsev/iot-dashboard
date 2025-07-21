@@ -1,4 +1,5 @@
 import { Kafka } from 'kafkajs';
+import { TelemetryData } from './types/telemetryData';
 
 const kafka = new Kafka({
   clientId: 'iot-manager',
@@ -9,7 +10,7 @@ const topic = 'telemetry';
 const consumer = kafka.consumer({ groupId: 'iot-group' });
 
 // Initialize Kafka consumer to listen for telemetry messages
-export const initMessageConsumer = async (processMessage) => {
+export const initMessageConsumer = async (processMessage: (payload: TelemetryData) => Promise<void>) => {
   try {
     await consumer.connect();
     await consumer.subscribe({ topic, fromBeginning: true });
@@ -17,8 +18,12 @@ export const initMessageConsumer = async (processMessage) => {
 
     await consumer.run({
       eachMessage: async ({ message }) => {
-          const payload = JSON.parse(message.value.toString());
-          await processMessage(payload);
+        if (message.value === null) {
+          console.warn('Received message with null value');
+          return;
+        }
+        const payload = JSON.parse(message.value.toString()) as TelemetryData;
+        await processMessage(payload);
       },
     });
   } catch (err) {
