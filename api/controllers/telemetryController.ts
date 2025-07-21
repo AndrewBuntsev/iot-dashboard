@@ -17,7 +17,7 @@ export const getTelemetry = async (req: Request, res: Response, next: NextFuncti
 
     const query = `
       SELECT device_id, temperature, humidity, air_pollution, pressure, timestamp_epoch, timestamp_iso
-      FROM \`telemetry\`
+      FROM \`${process.env.COUCHBASE_BUCKET}\`
       WHERE device_id IN [${deviceIdList}] ${timeFilter}
       ORDER BY timestamp_epoch DESC
       LIMIT 500

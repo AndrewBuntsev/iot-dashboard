@@ -1,5 +1,18 @@
+import 'dotenv/config';
 import { init, publish } from './kafkaClient';
 import { TelemetryData } from './types/telemetryData';
+
+
+// Insure environment variables are set
+const {
+  MESSAGE_BROKER_HOST,
+  MESSAGE_BROKER_TOPIC,
+  DEVICE_ID
+} = process.env;
+
+if (!MESSAGE_BROKER_HOST || !MESSAGE_BROKER_TOPIC || !DEVICE_ID) {
+  throw new Error('Environment variables are not set properly');
+}
 
 let temp = 23.2;
 let humidity = 61;
@@ -22,7 +35,7 @@ const generateTelemetry = (): TelemetryData => {
 
   const now = new Date();
   const payload = {
-    device_id: process.env.DEVICE_ID as string,
+    device_id: DEVICE_ID,
     temperature: temp,
     humidity: humidity,
     air_pollution: pollution,

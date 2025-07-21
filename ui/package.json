@@ -15,6 +15,7 @@
     "@mui/x-charts-pro": "^8.9.0",
     "autoprefixer": "^10.4.21",
     "chance": "^1.1.13",
+    "dotenv": "^17.2.0",
     "next": "15.4.1",
     "postcss": "^8.5.6",
     "react": "19.1.0",
@@ -24,7 +25,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/chance": "^1.1.7",
-    "@types/node": "^20",
+    "@types/node": "^20.19.9",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4.1.11",

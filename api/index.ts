@@ -1,15 +1,30 @@
 import express from 'express';
 import cors from 'cors';
+import 'dotenv/config';
 import { initCouchbase } from './dbClient.js';
 import { telemetryRoutes } from './routes/telemetryRoutes.js';
 
+
+const {
+  COUCHBASE_HOST,
+  COUCHBASE_USER,
+  COUCHBASE_PASSWORD,
+  COUCHBASE_BUCKET,
+  PORT,
+  UI_HOST
+} = process.env;
+
+// Insure environment variables are set
+if (!COUCHBASE_HOST || !COUCHBASE_USER || !COUCHBASE_PASSWORD || !COUCHBASE_BUCKET || !PORT) {
+  throw new Error('Environment variables are not set properly');
+}
+
+
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: UI_HOST || 'http://localhost:3000'
 }));
 app.use(express.json());
-
-const PORT = process.env.PORT || 4000;
 
 // Routes
 app.use('/api/telemetry', telemetryRoutes);

@@ -1,19 +1,26 @@
 import { Kafka } from 'kafkajs';
 import { TelemetryData } from './types/telemetryData';
 
+const {
+  MESSAGE_BROKER_HOST,
+  MESSAGE_BROKER_TOPIC,
+  MESSAGE_BROKER_CLIENT_ID = 'iot-manager',
+  MESSAGE_BROKER_GROUP_ID = 'iot-group'
+} = process.env;
+
 const kafka = new Kafka({
-  clientId: 'iot-manager',
-  brokers: [process.env.MESSAGE_BROKER || 'localhost:9092']
+  clientId: MESSAGE_BROKER_CLIENT_ID,
+  brokers: [MESSAGE_BROKER_HOST as string]
 });
 
-const topic = 'telemetry';
-const consumer = kafka.consumer({ groupId: 'iot-group' });
+const consumer = kafka.consumer({ groupId: MESSAGE_BROKER_GROUP_ID });
+
 
 // Initialize Kafka consumer to listen for telemetry messages
 export const initMessageConsumer = async (processMessage: (payload: TelemetryData) => Promise<void>) => {
   try {
     await consumer.connect();
-    await consumer.subscribe({ topic, fromBeginning: true });
+    await consumer.subscribe({ topic: MESSAGE_BROKER_TOPIC as string, fromBeginning: true });
     console.log('IoT Manager listening for telemetry...');
 
     await consumer.run({

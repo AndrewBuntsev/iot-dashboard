@@ -5,12 +5,11 @@
 ## CONFIG
 
 - add .env files to any service that expects environment variables
+*DONE* (only local .env files are supposed to be committed, the rest are ignored)
 
-- in order to create visibility of any expected environment variables
+- replace `npm install` in your Dockerfile(s) with `npm ci`, for environment consistency
 
-    - replace `npm install` in your Dockerfile(s) with `npm ci`, for environment consistency
-
-    - add a simple Makefile that runs `npm ci`
+- add a simple Makefile that runs `npm ci`
    
 
 ## CODE

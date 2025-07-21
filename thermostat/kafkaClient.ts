@@ -1,13 +1,18 @@
 import { Kafka } from 'kafkajs';
 import { TelemetryData } from './types/telemetryData';
 
+const {
+  MESSAGE_BROKER_HOST,
+  MESSAGE_BROKER_TOPIC,
+  MESSAGE_BROKER_CLIENT_ID = 'thermostat-producer'
+} = process.env;
+
 const kafka = new Kafka({
-  clientId: 'thermostat-producer',
-  brokers: [process.env.MESSAGE_BROKER || 'localhost:9092']
+  clientId: MESSAGE_BROKER_CLIENT_ID,
+  brokers: [MESSAGE_BROKER_HOST as string]
 });
 
 const producer = kafka.producer();
-const topic = 'telemetry';
 
 // Initialize Kafka producer
 export const init = async () => {
@@ -23,7 +28,7 @@ export const init = async () => {
 export const publish = async (payload: TelemetryData) => {
   try {
     await producer.send({
-      topic,
+      topic: MESSAGE_BROKER_TOPIC as string,
       messages: [{ value: JSON.stringify(payload) }]
     });
 

@@ -9,10 +9,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "couchbase": "^4.2.3",
+    "dotenv": "^17.2.0",
     "express": "^4.19.2",
     "tsx": "^4.20.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.15",
     "typescript": "^5.8.3"
