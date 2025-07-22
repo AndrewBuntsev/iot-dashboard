@@ -8,6 +8,7 @@
 *DONE* (only local .env files are supposed to be committed, the rest are ignored)
 
 - replace `npm install` in your Dockerfile(s) with `npm ci`, for environment consistency
+*DONE*
 
 - add a simple Makefile that runs `npm ci`
    
