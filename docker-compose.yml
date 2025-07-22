@@ -24,6 +24,11 @@ services:
     volumes:
       - ./couchbase/init.sh:/init.sh
     entrypoint: ["/bin/sh", "/init.sh"]
+    environment:
+      - COUCHBASE_HOST=${COUCHBASE_HOST}
+      - COUCHBASE_USER=${COUCHBASE_USER}
+      - COUCHBASE_PASSWORD=${COUCHBASE_PASSWORD}
+      - COUCHBASE_BUCKET=${COUCHBASE_BUCKET}
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
