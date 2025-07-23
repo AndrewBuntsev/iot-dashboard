@@ -11,6 +11,7 @@
 *DONE*
 
 - add a simple Makefile that runs `npm ci`
+*DONE*
    
 
 ## CODE
