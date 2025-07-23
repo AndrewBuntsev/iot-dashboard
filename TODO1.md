@@ -31,6 +31,7 @@
 - follow the steps here: https://code.visualstudio.com/docs/nodejs/profiling
 
 - add one unit-test per repo (use Jest)
+*DONE* (added unit tests for `api`, `thermostat`, `iot-manager`, to run them use `make test-unit`)
 
 - add one integration test to the API
 

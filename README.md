@@ -21,7 +21,7 @@ The system is composed of several services, orchestrated via Docker Compose:
 
 2. **Start all services:**
    ```bash
-   docker-compose up -d
+   make up
    ```
 
 3. **Access the UI:**
@@ -50,7 +50,7 @@ The system is composed of several services, orchestrated via Docker Compose:
 
 To stop all services and remove containers, run:
 ```bash
-docker-compose down
+make down
 ```
 
 ## Troubleshooting
@@ -75,5 +75,5 @@ Now stop and restart the project:
 
 ```bash
 ```bash
-docker-compose down
-docker-compose up -d
+make down
+make up

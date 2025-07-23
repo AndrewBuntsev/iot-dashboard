@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { initCouchbase } from './dbClient.js';
-import { telemetryRoutes } from './routes/telemetryRoutes.js';
+import { errorHandler, createError } from './middleware/errorHandler';
+import { initCouchbase } from './dbClient';
+import { telemetryRoutes } from './routes/telemetryRoutes';
 
 
 const {
@@ -28,6 +29,14 @@ app.use(express.json());
 
 // Routes
 app.use('/api/telemetry', telemetryRoutes);
+
+// Route not found handler (should be after all routes)
+app.use((req, res, next) => {
+  next(createError(`${req.method} ${req.originalUrl} not found`, 404));
+});
+
+// Error handling middleware (should be last)
+app.use(errorHandler);
 
 (async () => {
   await initCouchbase();
