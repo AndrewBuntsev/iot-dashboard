@@ -33,13 +33,10 @@
 - add one unit-test per repo (use Jest)  
 *DONE* (added unit tests for `api`, `thermostat`, `iot-manager`, to run them use `make test-unit`)
 
-- add one integration test to the API
+- add one integration test to the API using Playwright  
+*DONE* (to run them use `make test-integration`, to run all the tests (unit and integration) use `make test`)
 
-    - you can use Playwright if you want a full-fat solution
-
-    - alternatively, just use Jest to trigger a second test suite where nothing is mocked
-
-    - i.e. it really calls a running API
+- create a separate service for integration testing, move the integration tests there, and run them in a separate Docker container
  
 
 ## COUCHBASE

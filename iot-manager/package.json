@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "tsx index.ts",
-    "test": "jest"
+    "test::unit": "jest"
   },
   "dependencies": {
     "couchbase": "^4.2.3",

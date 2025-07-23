@@ -14,6 +14,19 @@ ci:
 	docker-compose run ui npm ci
 
 test-unit:
-	docker-compose run --rm api npm test
-	docker-compose run --rm thermostat npm test
-	docker-compose run --rm iot-manager npm test
+	docker-compose run --rm api npm run test::unit
+	docker-compose run --rm thermostat npm run test::unit
+	docker-compose run --rm iot-manager npm run test::unit
+
+test-integration:
+	@set -e; \
+	trap 'docker-compose down' EXIT; \
+	docker-compose --env-file .env.test up -d --build; \
+	echo "Waiting for containers to be ready..."; \
+	sleep 20; \
+	docker exec api-test npx playwright test
+	echo "Waiting for containers to be terminated..."; \
+	sleep 5; \
+
+test: build test-unit down test-integration
+

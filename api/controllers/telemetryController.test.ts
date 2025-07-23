@@ -1,4 +1,4 @@
-jest.mock('../dbClient', () => ({
+jest.mock('@/dbClient', () => ({
   execQuery: jest.fn().mockResolvedValue([{ device_id: 'dev1', temperature: 22 }])
 }));
 

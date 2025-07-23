@@ -5,7 +5,11 @@
     "moduleResolution": "Node",
     "rootDir": ".",
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": ["*.ts"]
 }
