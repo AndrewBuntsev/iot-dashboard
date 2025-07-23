@@ -4,19 +4,19 @@
 
 ## CONFIG
 
-- add .env files to any service that expects environment variables
+- add .env files to any service that expects environment variables  
 *DONE* (only local .env files are supposed to be committed, the rest are ignored)
 
-- replace `npm install` in your Dockerfile(s) with `npm ci`, for environment consistency
+- replace `npm install` in your Dockerfile(s) with `npm ci`, for environment consistency  
 *DONE*
 
-- add a simple Makefile that runs `npm ci`
+- add a simple Makefile that runs `npm ci`  
 *DONE*
    
 
 ## CODE
 
-- convert services to use typescript (you don't have to type everything)
+- convert services to use typescript (you don't have to type everything)  
 *DONE*
  
 
@@ -30,7 +30,7 @@
 
 - follow the steps here: https://code.visualstudio.com/docs/nodejs/profiling
 
-- add one unit-test per repo (use Jest)
+- add one unit-test per repo (use Jest)  
 *DONE* (added unit tests for `api`, `thermostat`, `iot-manager`, to run them use `make test-unit`)
 
 - add one integration test to the API
@@ -44,15 +44,15 @@
 
 ## COUCHBASE
 
-- use a parameterised query?
+- use a parameterised query?  
 *DONE*
 
-- use a prepared statement?
+- use a prepared statement?  
 *DONE* (Couchbase automatically prepares queries when using the SDK, so no need to do it manually)
 
 ## KAFKA
 
-- deploy a Kafka UI (e.g. Kowl)
+- deploy a Kafka UI (e.g. Kowl)  
 *DONE*
 
 - add a second partition (if you don't already have one)
