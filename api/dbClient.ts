@@ -42,7 +42,7 @@ export const execQuery = async (query: string, params: QueryParam) => {
     throw new Error('Couchbase cluster is not initialized. Call initCouchbase() first.');
   }
   try {
-    const result = await cluster.query(query, { parameters: params });
+    const result = await cluster.query(query, { parameters: params, adhoc: false });
     return result.rows;
   } catch (err) {
     console.error('Error executing query: ', err);
