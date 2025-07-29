@@ -36,7 +36,8 @@
 - add one integration test to the API using Playwright  
 *DONE* (to run them use `make test-integration`, to run all the tests (unit and integration) use `make test`)
 
-- create a separate service for integration testing, move the integration tests there, and run them in a separate Docker container
+- create a separate service for integration testing, move the integration tests there, and run them in a separate Docker container  
+*DONE*
  
 
 ## COUCHBASE

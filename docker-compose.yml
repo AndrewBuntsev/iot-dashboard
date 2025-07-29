@@ -124,3 +124,20 @@ services:
       - COUCHBASE_USER=${COUCHBASE_USER}
       - COUCHBASE_PASSWORD=${COUCHBASE_PASSWORD}
       - COUCHBASE_BUCKET=${COUCHBASE_BUCKET}
+
+  test:
+    build:
+      context: ./test
+    container_name: ${TEST_CONTAINER_NAME}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - couchbase
+      - kafka
+      - iot-manager
+      #- api
+    environment:
+      - COUCHBASE_HOST=${COUCHBASE_HOST}
+      - COUCHBASE_USER=${COUCHBASE_USER}
+      - COUCHBASE_PASSWORD=${COUCHBASE_PASSWORD}
+      - COUCHBASE_BUCKET=${COUCHBASE_BUCKET}

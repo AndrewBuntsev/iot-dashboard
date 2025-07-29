@@ -1,9 +1,11 @@
 import { test, expect, request } from '@playwright/test';
 
+const API_BASE_URL = 'http://api:4000';
+
 test.describe('Telemetry API', () => {
   test('should return telemetry data for Living_Room', async ({ playwright }) => {
     const apiContext = await request.newContext({
-      baseURL: 'http://localhost:4000',
+      baseURL: API_BASE_URL,
     });
 
     const response = await apiContext.get('/api/telemetry/Living_Room?period_sec=30');
@@ -27,7 +29,7 @@ test.describe('Telemetry API', () => {
   // period_sec is optional, so we can test without it
   test('should return telemetry data for Living_Room without period_sec', async ({ playwright }) => {
     const apiContext = await request.newContext({
-      baseURL: 'http://localhost:4000',
+      baseURL: API_BASE_URL,
     });
 
     const response = await apiContext.get('/api/telemetry/Living_Room');
@@ -50,7 +52,7 @@ test.describe('Telemetry API', () => {
 
   test('should return telemetry data for Garage', async ({ playwright }) => {
     const apiContext = await request.newContext({
-      baseURL: 'http://localhost:4000',
+      baseURL: API_BASE_URL,
     });
 
     const response = await apiContext.get('/api/telemetry/Garage?period_sec=30');
@@ -74,7 +76,7 @@ test.describe('Telemetry API', () => {
   // emty for unknown device
   test('should return empty array for unknown device', async ({ playwright }) => {
     const apiContext = await request.newContext({
-      baseURL: 'http://localhost:4000',
+      baseURL: API_BASE_URL,
     });
 
     const response = await apiContext.get('/api/telemetry/Unknown_Device?period_sec=30');
@@ -92,7 +94,7 @@ test.describe('Telemetry API', () => {
   
   test('should return 404 (Not Found) for missing device_ids', async ({ playwright }) => {
     const apiContext = await request.newContext({
-      baseURL: 'http://localhost:4000',
+      baseURL: API_BASE_URL,
     });
 
     const response = await apiContext.get('/api/telemetry');
