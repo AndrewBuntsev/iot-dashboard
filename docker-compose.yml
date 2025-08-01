@@ -137,7 +137,4 @@ services:
       - iot-manager
       #- api
     environment:
-      - COUCHBASE_HOST=${COUCHBASE_HOST}
-      - COUCHBASE_USER=${COUCHBASE_USER}
-      - COUCHBASE_PASSWORD=${COUCHBASE_PASSWORD}
-      - COUCHBASE_BUCKET=${COUCHBASE_BUCKET}
+      - API_HOST=${API_CONTAINER_NAME}
