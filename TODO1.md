@@ -22,7 +22,8 @@
 
 ## TESTING
 
-- add one load-test to the API `.get('/:device_ids)` endpoint using k6
+- add one load-test to the API `.get('/:device_ids)` endpoint using k6  
+*DONE* (to run it use `make test-load`, it will run the load test against the API and output results to InfluxDB, which can be viewed in Grafana at http://localhost:3005)
 
 - **THIS IS THE MOST IMPORTANT PART OF THIS SHOPPING LIST**
 

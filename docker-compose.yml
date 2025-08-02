@@ -2,6 +2,8 @@ version: '3.8'
 
 volumes:
   couchbase-data:
+  influxdb:
+  grafana:
 
 services:
   couchbase:
@@ -74,6 +76,7 @@ services:
       - DEVICE_ID=Living_Room
       - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
+      - TELEMETRY_INTERVAL=1000 # Set to 0 for no telemetry
 
   thermostat_2:
     build:
@@ -85,6 +88,43 @@ services:
       - DEVICE_ID=Garage
       - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
+      - TELEMETRY_INTERVAL=1000 # Set to 0 for no telemetry
+
+  thermostat_3:
+    build:
+      context: ./thermostat
+    container_name: ${THERMOSTAT_3_CONTAINER_NAME}
+    depends_on:
+      - kafka
+    environment:
+      - DEVICE_ID=Bedroom
+      - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
+      - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
+      - TELEMETRY_INTERVAL=100 # Set to 0 for no telemetry
+
+  thermostat_4:
+    build:
+      context: ./thermostat
+    container_name: ${THERMOSTAT_4_CONTAINER_NAME}
+    depends_on:
+      - kafka
+    environment:
+      - DEVICE_ID=Kitchen
+      - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
+      - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
+      - TELEMETRY_INTERVAL=100 # Set to 0 for no telemetry
+
+  thermostat_5:
+    build:
+      context: ./thermostat
+    container_name: ${THERMOSTAT_5_CONTAINER_NAME}
+    depends_on:
+      - kafka
+    environment:
+      - DEVICE_ID=Office
+      - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
+      - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
+      - TELEMETRY_INTERVAL=0 # Set to 0 for no telemetry
 
   iot-manager:
     build:
@@ -138,3 +178,22 @@ services:
       #- api
     environment:
       - API_HOST=${API_CONTAINER_NAME}
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: ${INFLUXDB_CONTAINER_NAME}
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=k6
+      - INFLUXDB_HTTP_AUTH_ENABLED=false
+
+  grafana:
+    image: grafana/grafana
+    container_name: ${GRAFANA_CONTAINER_NAME}
+    ports:
+      - "3005:3000"
+    volumes:
+      - grafana:/var/lib/grafana

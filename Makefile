@@ -25,7 +25,13 @@ test-unit:
 test-integration:
 	echo "Running Integration Tests"; \
 	docker exec test npx playwright test
-	
+
+test-load:
+	docker run --rm -i \
+		-v $(PWD)/test/load-tests:/load-tests \
+  		grafana/k6 run \
+  		--out influxdb=http://host.docker.internal:8086/k6 \
+  		/load-tests/telemetry.test.js	
 
 wait-for-start:
 	@(echo "Waiting for containers to be ready..."; sleep 20)

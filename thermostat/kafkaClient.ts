@@ -32,7 +32,7 @@ export const publish = async (payload: TelemetryData) => {
       messages: [{ value: JSON.stringify(payload) }]
     });
 
-    console.log('Published: ', payload);
+    //console.log('Published: ', payload);
   } catch (err) {
     console.error('Error publishing: ', err);
   }

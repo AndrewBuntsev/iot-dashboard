@@ -35,6 +35,28 @@ The system is composed of several services, orchestrated via Docker Compose:
    - Username: `admin`
    - Password: `password`
 
+6. **Grafana Dashboard:**
+   - Access Grafana at [http://localhost:3005](http://localhost:3005)
+   - Username: `admin`
+   - Password: `admin`
+   - Add InfluxDB as a data source:
+     - URL: `http://host.docker.internal:8086`
+     - Database: `k6`
+
+7. **Tests:**
+   - Run load tests using:
+   ```bash
+   make test-load
+   ```
+   - Run unit tests using:
+   ```bash
+   make test-unit
+   ```
+   - Run integration tests using:
+   ```bash
+   make test-integration
+   ```
+
 ## Development Notes
 
 - The UI uses the environment variable `NEXT_PUBLIC_API_BASE_URL` to connect to the API.

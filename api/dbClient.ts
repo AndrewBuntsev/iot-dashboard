@@ -1,5 +1,5 @@
-import couchbase, { Cluster, Collection } from 'couchbase';
-import { QueryParam } from './types/queryParam';
+import couchbase, { Cluster, Collection, QueryOptions } from 'couchbase';
+
 
 let cluster: Cluster | null = null;
 let telemetryCollection: Collection | null = null;
@@ -37,12 +37,12 @@ export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
 };
 
 // Execute a query
-export const execQuery = async (query: string, params: QueryParam) => {
+export const execQuery = async (query: string, params: QueryOptions) => {
   if (!cluster) {
     throw new Error('Couchbase cluster is not initialized. Call initCouchbase() first.');
   }
   try {
-    const result = await cluster.query(query, { parameters: params, adhoc: false });
+    const result = await cluster.query(query, params);
     return result.rows;
   } catch (err) {
     console.error('Error executing query: ', err);

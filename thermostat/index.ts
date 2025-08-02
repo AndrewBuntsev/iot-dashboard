@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { init, publish } from './kafkaClient';
+import { init as initKafka, publish } from './kafkaClient';
 import { generateTelemetry } from './telemetryGenerator';
 
 
@@ -7,8 +7,10 @@ import { generateTelemetry } from './telemetryGenerator';
 const {
   MESSAGE_BROKER_HOST,
   MESSAGE_BROKER_TOPIC,
-  DEVICE_ID
-} = process.env;
+  DEVICE_ID,
+  } = process.env;
+
+const TELEMETRY_INTERVAL = parseInt(process.env.TELEMETRY_INTERVAL || '1000', 10);
 
 if (!MESSAGE_BROKER_HOST || !MESSAGE_BROKER_TOPIC || !DEVICE_ID) {
   throw new Error('Environment variables are not set properly');
@@ -20,11 +22,16 @@ const telemetrySimulator = async () => {
   setInterval(async () => {
     const payload = generateTelemetry(DEVICE_ID);
     await publish(payload);
-  }, 1000);
+  }, TELEMETRY_INTERVAL);
 };
 
 
 (async () => {
-  await init();
-  await telemetrySimulator();
+  await initKafka();
+  if (TELEMETRY_INTERVAL === 0) {
+    console.log('Telemetry simulation is disabled (to enable, set TELEMETRY_INTERVAL environment variable to a positive value in milliseconds)');
+  } else {
+    console.log(`Starting telemetry simulation with interval: ${TELEMETRY_INTERVAL} ms`);
+    await telemetrySimulator();
+  } 
 })();
