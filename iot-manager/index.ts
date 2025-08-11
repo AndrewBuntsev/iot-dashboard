@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { initCouchbase, saveTelemetry } from './dbClient';
+import { initCouchbase } from './dbClient';
 import { initMessageConsumer } from './kafkaClient';
 import { processMessage } from './messageProcessor';
 

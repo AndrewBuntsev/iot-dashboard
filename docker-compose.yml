@@ -42,7 +42,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: confluentinc/cp-kafka:7.4.0
+    image: wurstmeister/kafka
     container_name: ${KAFKA_CONTAINER_NAME}
     depends_on:
       - zookeeper
@@ -55,6 +55,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${MESSAGE_BROKER_HOST}
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "${MESSAGE_BROKER_TOPIC}:1:1"
 
   kowl:
     image: redpandadata/console:latest
@@ -76,7 +77,7 @@ services:
       - DEVICE_ID=Living_Room
       - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
-      - TELEMETRY_INTERVAL=1000 # Set to 0 for no telemetry
+      - TELEMETRY_INTERVAL=1 # Set to 0 for no telemetry
 
   thermostat_2:
     build:
@@ -88,7 +89,7 @@ services:
       - DEVICE_ID=Garage
       - MESSAGE_BROKER_HOST=${MESSAGE_BROKER_HOST}
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
-      - TELEMETRY_INTERVAL=1000 # Set to 0 for no telemetry
+      - TELEMETRY_INTERVAL=1 # Set to 0 for no telemetry
 
   thermostat_3:
     build:

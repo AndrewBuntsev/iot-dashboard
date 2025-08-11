@@ -3,7 +3,7 @@ import { saveTelemetry } from './dbClient';
 
 
 export const processMessage = async (payload: TelemetryData) => {
-  console.log('Received telemetry:', payload);
+  //console.log('Received telemetry:', payload);
   await saveTelemetry(payload);
 };
 

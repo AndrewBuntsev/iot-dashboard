@@ -27,7 +27,7 @@ export const generateTelemetry = (deviceId: string): TelemetryData => {
     humidity: humidity,
     air_pollution: pollution,
     pressure: pressure,
-    timestamp_epoch: Math.floor(now.getTime() / 1000),
+    timestamp_epoch: Math.floor(now.getTime()),
     timestamp_iso: now.toISOString()
   };
 

@@ -5,7 +5,7 @@ const {
   MESSAGE_BROKER_HOST,
   MESSAGE_BROKER_TOPIC,
   MESSAGE_BROKER_CLIENT_ID = 'iot-manager',
-  MESSAGE_BROKER_GROUP_ID = 'iot-group'
+  MESSAGE_BROKER_CONSUMER_GROUP_ID = 'iot-group'
 } = process.env;
 
 const kafka = new Kafka({
@@ -13,7 +13,7 @@ const kafka = new Kafka({
   brokers: [MESSAGE_BROKER_HOST as string]
 });
 
-const consumer = kafka.consumer({ groupId: MESSAGE_BROKER_GROUP_ID });
+const consumer = kafka.consumer({ groupId: MESSAGE_BROKER_CONSUMER_GROUP_ID });
 
 
 // Initialize Kafka consumer to listen for telemetry messages
