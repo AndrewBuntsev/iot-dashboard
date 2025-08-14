@@ -67,10 +67,10 @@ services:
     depends_on:
       - kafka
 
-  thermostat:
+  sensor:
     build:
-      context: ./thermostat
-    container_name: ${THERMOSTAT_CONTAINER_NAME}
+      context: ./sensor
+    container_name: ${SENSOR_CONTAINER_NAME}
     depends_on:
       - kafka
     environment:
@@ -79,10 +79,10 @@ services:
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
       - TELEMETRY_INTERVAL=1 # Set to 0 for no telemetry
 
-  thermostat_2:
+  sensor_2:
     build:
-      context: ./thermostat
-    container_name: ${THERMOSTAT_2_CONTAINER_NAME}
+      context: ./sensor
+    container_name: ${SENSOR_2_CONTAINER_NAME}
     depends_on:
       - kafka
     environment:
@@ -91,10 +91,10 @@ services:
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
       - TELEMETRY_INTERVAL=1 # Set to 0 for no telemetry
 
-  thermostat_3:
+  sensor_3:
     build:
-      context: ./thermostat
-    container_name: ${THERMOSTAT_3_CONTAINER_NAME}
+      context: ./sensor
+    container_name: ${SENSOR_3_CONTAINER_NAME}
     depends_on:
       - kafka
     environment:
@@ -103,10 +103,10 @@ services:
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
       - TELEMETRY_INTERVAL=100 # Set to 0 for no telemetry
 
-  thermostat_4:
+  sensor_4:
     build:
-      context: ./thermostat
-    container_name: ${THERMOSTAT_4_CONTAINER_NAME}
+      context: ./sensor
+    container_name: ${SENSOR_4_CONTAINER_NAME}
     depends_on:
       - kafka
     environment:
@@ -115,10 +115,10 @@ services:
       - MESSAGE_BROKER_TOPIC=${MESSAGE_BROKER_TOPIC}
       - TELEMETRY_INTERVAL=100 # Set to 0 for no telemetry
 
-  thermostat_5:
+  sensor_5:
     build:
-      context: ./thermostat
-    container_name: ${THERMOSTAT_5_CONTAINER_NAME}
+      context: ./sensor
+    container_name: ${SENSOR_5_CONTAINER_NAME}
     depends_on:
       - kafka
     environment:

@@ -12,15 +12,15 @@ down:
 
 ci:
 	docker compose run api npm ci
-	docker compose run thermostat npm ci
+	docker compose run sensor npm ci
 	docker compose run iot-manager npm ci
 	docker compose run ui npm ci
 
 test-unit:
 	echo "Running Unit Tests"; \
 	docker exec api npm run test::unit
-	docker exec thermostat npm run test::unit
-	docker exec iot-manager npm run test::unit	
+	docker exec sensor npm run test::unit
+	docker exec iot-manager npm run test::unit
 
 test-integration:
 	echo "Running Integration Tests"; \

@@ -6,7 +6,7 @@ This project is a full-stack IoT telemetry dashboard. It collects, stores, and v
 
 The system is composed of several services, orchestrated via Docker Compose:
 
-- **thermostat, thermostat_2**: Simulated IoT devices that generate and publish telemetry data to Kafka.
+- **sensor, sensor_2**: Simulated IoT devices that generate and publish telemetry data to Kafka.
 - **kafka**: Message broker for ingesting telemetry data.
 - **zookeeper**: Required by Kafka for cluster management.
 - **couchbase**: NoSQL database for storing telemetry data.
@@ -65,7 +65,7 @@ The system is composed of several services, orchestrated via Docker Compose:
 
 ## Customization
 
-- To add more simulated devices, duplicate and configure additional thermostat services in `docker-compose.yml`.
+- To add more simulated devices, duplicate and configure additional sensor services in `docker-compose.yml`.
 - To change database or broker settings, update the respective service environment variables.
 
 ## Stopping the Project

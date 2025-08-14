@@ -4,7 +4,7 @@ import { TelemetryData } from './types/telemetryData';
 const {
   MESSAGE_BROKER_HOST,
   MESSAGE_BROKER_TOPIC,
-  MESSAGE_BROKER_CLIENT_ID = 'thermostat-producer'
+  MESSAGE_BROKER_CLIENT_ID = 'sensor-producer'
 } = process.env;
 
 const kafka = new Kafka({
@@ -18,7 +18,7 @@ const producer = kafka.producer();
 export const init = async () => {
   try {
     await producer.connect();
-    console.log('Thermostat producer started');
+    console.log('Sensor producer started');
   } catch (err) {
     console.error('Error connecting producer:', err);
   }

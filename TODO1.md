@@ -32,7 +32,7 @@
 - follow the steps here: https://code.visualstudio.com/docs/nodejs/profiling
 
 - add one unit-test per repo (use Jest)  
-*DONE* (added unit tests for `api`, `thermostat`, `iot-manager`, to run them use `make test-unit`)
+*DONE* (added unit tests for `api`, `sensor`, `iot-manager`, to run them use `make test-unit`)
 
 - add one integration test to the API using Playwright  
 *DONE* (to run them use `make test-integration`, to run all the tests (unit and integration) use `make test`)
