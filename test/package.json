@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx index.ts",
     "test::unit": "jest",
-    "test::integration": "playwright test"
+    "test::integration": "playwright test",
+    "test::kafka": "playwright test ./integration-tests/kafka/kafka.spec.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -10,10 +10,13 @@
   "dependencies": {
     "couchbase": "^4.2.3",
     "dotenv": "^17.2.0",
+    "express": "^5.1.0",
     "kafkajs": "^2.2.4",
-    "tsx": "^4.20.3"
+    "tsx": "^4.20.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.15",
     "jest": "^30.0.5",

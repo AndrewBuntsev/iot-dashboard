@@ -1,26 +1,22 @@
 import couchbase, { Collection } from 'couchbase';
+import { v4 as uuidv4 } from 'uuid';
 import { TelemetryData } from './types/telemetryData';
-
-const {
-  COUCHBASE_HOST,
-  COUCHBASE_USER,
-  COUCHBASE_PASSWORD,
-  COUCHBASE_BUCKET
-} = process.env;
+import { getConfig } from './config';
 
 let telemetryCollection: Collection | null = null;
 
 // Initialize Couchbase connection and create the telemetry collection with retry logic
 export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
+  const appConfig = getConfig();
   let retries = 0;
   while (retries < maxRetries) {
     try {
-      const cluster = await couchbase.connect(`couchbase://${COUCHBASE_HOST}`, {
-        username: COUCHBASE_USER,
-        password: COUCHBASE_PASSWORD,
+      const cluster = await couchbase.connect(`couchbase://${appConfig.COUCHBASE_HOST}`, {
+        username: appConfig.COUCHBASE_USER,
+        password: appConfig.COUCHBASE_PASSWORD,
       });
 
-      const bucket = cluster.bucket(COUCHBASE_BUCKET as string);
+      const bucket = cluster.bucket(appConfig.COUCHBASE_BUCKET);
       telemetryCollection = bucket.defaultCollection();
       console.log('Connected to Couchbase and initialized telemetry collection');
       return;
@@ -41,7 +37,7 @@ export const saveTelemetry = async (payload: TelemetryData) => {
     throw new Error('Couchbase collection not initialized');
   }
 
-  const key = `${payload.device_id}_${payload.timestamp_epoch}`;
+  const key = `${payload.device_id}_${payload.timestamp_epoch}_${uuidv4()}`;
   try {
     await telemetryCollection.upsert(key, payload);
   } catch (err) {
