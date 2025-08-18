@@ -11,13 +11,11 @@
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "kafkajs": "^2.2.4",
-    "murmurhash-js": "^1.0.0",
     "tsx": "^4.20.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
-    "@types/murmurhash-js": "^1.0.6",
     "@types/node": "^24.0.15",
     "jest": "^30.0.5",
     "ts-jest": "^29.4.0",

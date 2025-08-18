@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { ServiceStatus } from './types/serviceStatus';
 import { getConfig } from './config';
 import { initCouchbase } from './dbClient';
-import { disconnectMessageConsumers, getConsumersLag, getTopicMetadata, initMessageConsumers, resetConsumerOffsets } from './kafkaClient';
+import { deleteAllMessages, disconnectMessageConsumers, getConsumersLag, getTopicDetails, initMessageConsumers, resetConsumerOffsets } from './kafkaClient';
 import { getMessagesConsumed, processMessage, setMessagesConsumed } from './messageProcessor';
 
 
@@ -68,11 +68,17 @@ if (!appConfig.PORT) {
     res.status(202).json({ message: 'Consumer offsets reset' });
   });
 
-  // Get Topic Metadata API
+  // Delete all messages
+  app.post('/api/delete-messages', async (req, res) => {
+    await deleteAllMessages(appConfig.MESSAGE_BROKER_TOPIC);
+    res.status(202).json({ message: 'All messages deleted' });
+  });
+
+  // Get Topic Details API
   app.get('/api/topic/:topic', async (req, res) => {
     const { topic } = req.params;
-    const metadata = await getTopicMetadata(topic);
-    res.status(200).json(metadata);
+    const details = await getTopicDetails(topic);
+    res.status(200).json(details);
   });
 
   // Get service stats API

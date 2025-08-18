@@ -104,9 +104,36 @@ export const resetConsumerOffsets = async (groupId: string, topic: string) => {
 //     }
 //   ]
 // }
-export const getTopicMetadata = async (topic: string) => {
+export const getTopicDetails = async (topic: string) => {
   await admin.connect();
-  const metadata = await admin.fetchTopicMetadata({ topics: [topic] });
-  await admin.disconnect();
-  return metadata;
+  try {
+    const [metadata, partitions] = await Promise.all([
+      admin.fetchTopicMetadata({ topics: [topic] }),
+      admin.fetchTopicOffsets(topic)
+    ]);
+    return { metadata, partitions };
+  } catch (error) {
+    if ((error as { type: string }).type === 'UNKNOWN_TOPIC_OR_PARTITION') {
+      return { metadata: null, partitions: [] };
+    }
+    console.error('Error fetching topic details: ', error);
+    throw error;
+  } finally {
+    await admin.disconnect();
+  }
 };
+
+export const deleteAllMessages = async (topic: string) => {
+  await admin.connect();
+
+  const partitions = await admin.fetchTopicOffsets(topic);
+  // const offsets = partitions.map(p => ({
+  //   partition: p.partition,
+  //   offset: p.high
+  // }));
+
+  await admin.deleteTopicRecords({ topic, partitions });
+  console.log(`All messages deleted from ${topic}`);
+
+  await admin.disconnect();
+}

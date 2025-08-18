@@ -1,5 +1,4 @@
-import { Kafka, RecordMetadata } from 'kafkajs';
-import murmur2 from "murmurhash-js";
+import { Kafka, RecordMetadata, CompressionTypes } from 'kafkajs';
 import { TelemetryData } from './types/telemetryData';
 
 const {
@@ -14,13 +13,7 @@ const kafka = new Kafka({
   brokers: [MESSAGE_BROKER_HOST as string]
 });
 
-const producer = kafka.producer({
-  createPartitioner: () => ({ topic, partitionMetadata, message }) => {
-    if (message.key?.toString() === 'Garage') return 0;
-    if (message.key?.toString() === 'Living_Room') return 1;
-    return 0;
-  }
-});
+const producer = kafka.producer();
 
 
 // Initialize Kafka producer
@@ -38,6 +31,7 @@ export const publish = async (payload: TelemetryData) => {
   try {
     const result: RecordMetadata[] = await producer.send({
       topic: MESSAGE_BROKER_TOPIC as string,
+      compression: CompressionTypes.GZIP,
       messages: [{ value: JSON.stringify(payload), key: Buffer.from(DEVICE_ID as string) }]
     });
 

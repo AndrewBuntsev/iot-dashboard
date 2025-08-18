@@ -131,4 +131,18 @@ if (!PORT) {
       runningTimeMs: (stoppedAt ?? Date.now()) - (startedAt ?? Date.now())
     });
   });
+
+  // Reset Stats API
+  app.post('/api/reset-stats', async (req, res) => {
+    if (serviceStatus === ServiceStatus.STARTED || simulationProcess) {
+      return res.status(400).json({ message: 'Service is already started, call /api/stop to stop it first' });
+    }
+
+    startedAt = null;
+    stoppedAt = null;
+    messagesPublished = 0;
+    messagesRemaining = null;
+
+    res.status(202).json({ message: 'Telemetry service stats reset' });
+  });
 }
