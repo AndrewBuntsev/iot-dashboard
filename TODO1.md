@@ -54,23 +54,27 @@
 - deploy a Kafka UI (e.g. Kowl)  
 *DONE*
 
-- add a second partition (if you don't already have one)
+- add a second partition (if you don't already have one)  
+*DONE*
 
-- key messages on device id
+- key messages on device id  
+*DONE* (Kafka messages are now keyed by device id)
 
-- ☝️ these two points will allow you to process multiple device messages in parallel
+- ☝️ these two points will allow you to process multiple device messages in parallel  
+*DONE*
 
-- see if you can add message compression ( https://kafka.js.org/docs/producing#compression )
- 
+- see if you can add message compression ( https://kafka.js.org/docs/producing#compression )  
+*DONE* (added gzip compression for Kafka messages, reduced performance as the result)
 
 ## BONUS POINTS
 
 - once you've done the stuff above, you'll be a legend :)
 
-- the next step is this: create a load test for the iot-manager
+- the next step is this: create a load test for the iot-manager  
+*DONE*
 
-- one option is to have a little service that loads up the Kafka topic aggressively, and then you can track the Kafka lag until it becomes zero - that's the test finish
+- one option is to have a little service that loads up the Kafka topic aggressively, and then you can track the Kafka lag until it becomes zero - that's the test finish  
+*DONE*
 
-- if you're feeling spicy, do this before you make the Kafka and Couchbase changes above, then you can compare before/after performance
-
- 
+- if you're feeling spicy, do this before you make the Kafka and Couchbase changes above, then you can compare before/after performance  
+*DONE* (run the comprehensive end-to-end load test with "make test-kafka")

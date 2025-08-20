@@ -48,4 +48,8 @@ test:
 	$(MAKE) wait-before-down
 	$(MAKE) down
 
+test-kafka:
+	docker compose -f docker-compose.test.yml up --build -d
+	npm --prefix test run test::kafka
+
 

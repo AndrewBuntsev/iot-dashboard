@@ -7,14 +7,19 @@ volumes:
 
 services:
   couchbase:
-    image: couchbase:community
+    image: couchbase:enterprise-7.6.2
     container_name: ${COUCHBASE_CONTAINER_NAME}
     ports:
-      - "8091-8096:8091-8096" # Web UI, N1QL, and other DB services
-      - "11210:11210"         # SDK port
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
+      - "8094:8094"
+      - "11210:11210"
+    working_dir: /opt
     environment:
       - COUCHBASE_ADMINISTRATOR_USERNAME=${COUCHBASE_USER}
       - COUCHBASE_ADMINISTRATOR_PASSWORD=${COUCHBASE_PASSWORD}
+      - COUCHBASE_MEMORY_QUOTA=1024
     volumes:
       - couchbase-data:/opt/couchbase/var
 

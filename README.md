@@ -56,6 +56,10 @@ The system is composed of several services, orchestrated via Docker Compose:
    ```bash
    make test-integration
    ```
+    - Run Kafka integration test suite using:
+   ```bash
+   make test-kafka
+   ```
 
 ## Development Notes
 

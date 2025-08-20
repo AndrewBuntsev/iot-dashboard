@@ -13,7 +13,7 @@ export const initCouchbase = async (maxRetries = 10, retryDelay = 5000) => {
     try {
       const cluster = await couchbase.connect(`couchbase://${appConfig.COUCHBASE_HOST}`, {
         username: appConfig.COUCHBASE_USER,
-        password: appConfig.COUCHBASE_PASSWORD,
+        password: appConfig.COUCHBASE_PASSWORD
       });
 
       const bucket = cluster.bucket(appConfig.COUCHBASE_BUCKET);

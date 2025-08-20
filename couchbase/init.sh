@@ -38,7 +38,7 @@ else
   echo "Creating bucket '$COUCHBASE_BUCKET'..."
   curl -s -u $COUCHBASE_USER:$COUCHBASE_PASSWORD -X POST http://$COUCHBASE_HOST:8091/pools/default/buckets \
     -d name=$COUCHBASE_BUCKET \
-    -d ramQuotaMB=128 \
+    -d ramQuotaMB=256 \
     -d bucketType=couchbase \
     -d flushEnabled=1
   sleep 5

@@ -27,11 +27,11 @@ export const init = async () => {
 };
 
 // Publish telemetry data to Kafka topic
-export const publish = async (payload: TelemetryData) => {
+export const publish = async (payload: TelemetryData, useCompression: boolean = false) => {
   try {
     const result: RecordMetadata[] = await producer.send({
       topic: MESSAGE_BROKER_TOPIC as string,
-      compression: CompressionTypes.GZIP,
+      compression: useCompression ? CompressionTypes.GZIP : CompressionTypes.None,
       messages: [{ value: JSON.stringify(payload), key: Buffer.from(DEVICE_ID as string) }]
     });
 

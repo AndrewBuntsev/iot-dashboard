@@ -16,6 +16,7 @@ const {
 let telemetryInterval = parseInt(process.env.TELEMETRY_INTERVAL || '1000', 10);
 let serviceStatus = process.env.SERVICE_STATUS || ServiceStatus.STARTED;
 let simulationProcess: NodeJS.Timeout | null = null;
+let useCompression: boolean = false;
 let messagesPublished = 0;
 let messagesRemaining: number | null = null;
 let startedAt: number | null = null;
@@ -39,7 +40,7 @@ const startService = async () => {
   simulationProcess = setInterval(async () => {
     if (messagesRemaining == null || messagesRemaining > 0) {
       const payload = generateTelemetry(DEVICE_ID);
-      await publish(payload);
+      await publish(payload, useCompression);
       messagesPublished++;
       if (messagesRemaining != null) {
         messagesRemaining--;
@@ -90,6 +91,7 @@ if (!PORT) {
     }
 
     const { interval, messagesLimit } = req.query;
+    useCompression = (req.query.useCompression === 'true');
 
     // Validate and set telemetry interval
     const parsedTelemetryInterval = parseInt((interval ?? 1000) as string, 10);
@@ -106,8 +108,8 @@ if (!PORT) {
       }
       messagesRemaining = parsedMessagesLimit;
     }
-    
-    startService();    
+
+    startService();
 
     res.status(202).json({ message: 'Telemetry service started' });
   });
