@@ -1,5 +1,7 @@
 import express from 'express';
+import { CompressionTypes } from 'kafkajs';
 import 'dotenv/config';
+import { getCompressionType } from './utils/kafka';
 import { ServiceStatus } from './types/serviceStatus';
 import { init as initKafka, publish } from './kafkaClient';
 import { generateTelemetry } from './telemetryGenerator';
@@ -16,7 +18,7 @@ const {
 let telemetryInterval = parseInt(process.env.TELEMETRY_INTERVAL || '1000', 10);
 let serviceStatus = process.env.SERVICE_STATUS || ServiceStatus.STARTED;
 let simulationProcess: NodeJS.Timeout | null = null;
-let useCompression: boolean = false;
+let compression: CompressionTypes = CompressionTypes.None;
 let messagesPublished = 0;
 let messagesRemaining: number | null = null;
 let startedAt: number | null = null;
@@ -40,7 +42,7 @@ const startService = async () => {
   simulationProcess = setInterval(async () => {
     if (messagesRemaining == null || messagesRemaining > 0) {
       const payload = generateTelemetry(DEVICE_ID);
-      await publish(payload, useCompression);
+      await publish(payload, compression);
       messagesPublished++;
       if (messagesRemaining != null) {
         messagesRemaining--;
@@ -91,7 +93,7 @@ if (!PORT) {
     }
 
     const { interval, messagesLimit } = req.query;
-    useCompression = (req.query.useCompression === 'true');
+    compression = getCompressionType(req.query.compression as string);
 
     // Validate and set telemetry interval
     const parsedTelemetryInterval = parseInt((interval ?? 1000) as string, 10);

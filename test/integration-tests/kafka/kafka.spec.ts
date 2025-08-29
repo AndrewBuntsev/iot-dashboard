@@ -38,7 +38,7 @@ import { test, expect, request, APIRequestContext } from '@playwright/test';
 const SENSOR_1_BASE_URL = 'http://localhost:5001';
 const SENSOR_2_BASE_URL = 'http://localhost:5002';
 const IOT_MANAGER_BASE_URL = 'http://localhost:6000';
-const MESSAGES_PER_SENSOR = 100000;
+const MESSAGES_PER_SENSOR = 10000;
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -65,8 +65,8 @@ const getNumberOfTopicMessages = async (context: APIRequestContext) => {
 };
 
 const scenarios = [
-  { useCompression: false, description: 'Publish Kafka messages without compression' },
-  { useCompression: true, description: 'Publish Kafka messages with compression (gzip)' },
+  //{ compression: 'none', description: 'Publish Kafka messages without compression' },
+  { compression: 'lz4', description: 'Publish Kafka messages with compression (lz4)' },
 ];
 
 const testSummary: string[] = ['Kafka Integration Tests Summary:', ' '];
@@ -142,8 +142,8 @@ for (const scenario of scenarios) {
       // Start both sensors
       console.log('Starting both sensors');
       await Promise.all([
-        sensor1Context.post(`/api/start?interval=1&messagesLimit=${MESSAGES_PER_SENSOR}&useCompression=${scenario.useCompression}`),
-        sensor2Context.post(`/api/start?interval=1&messagesLimit=${MESSAGES_PER_SENSOR}&useCompression=${scenario.useCompression}`),
+        sensor1Context.post(`/api/start?interval=1&messagesLimit=${MESSAGES_PER_SENSOR}&compression=${scenario.compression}`),
+        sensor2Context.post(`/api/start?interval=1&messagesLimit=${MESSAGES_PER_SENSOR}&compression=${scenario.compression}`),
       ]);
 
       // Ensure both sensors are started

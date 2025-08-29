@@ -14,7 +14,7 @@ echo "Couchbase is up."
 if ! curl -s http://$COUCHBASE_HOST:8091/pools/default | grep -q '"clusterName"'; then
   echo "Setting cluster memory quotas..."
   curl -s -X POST http://$COUCHBASE_HOST:8091/pools/default \
-    -d memoryQuota=256 \
+    -d memoryQuota=1024 \
     -d indexMemoryQuota=256
 
   echo "Configuring services and admin credentials..."
@@ -38,7 +38,7 @@ else
   echo "Creating bucket '$COUCHBASE_BUCKET'..."
   curl -s -u $COUCHBASE_USER:$COUCHBASE_PASSWORD -X POST http://$COUCHBASE_HOST:8091/pools/default/buckets \
     -d name=$COUCHBASE_BUCKET \
-    -d ramQuotaMB=256 \
+    -d ramQuotaMB=512 \
     -d bucketType=couchbase \
     -d flushEnabled=1
   sleep 5

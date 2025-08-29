@@ -1,5 +1,6 @@
-import { Kafka, RecordMetadata, CompressionTypes } from 'kafkajs';
+import { Kafka, RecordMetadata, CompressionTypes, CompressionCodecs } from 'kafkajs';
 import { TelemetryData } from './types/telemetryData';
+import { createLZ4Codec } from './utils/kafka';
 
 const {
   MESSAGE_BROKER_HOST,
@@ -12,6 +13,8 @@ const kafka = new Kafka({
   clientId: MESSAGE_BROKER_CLIENT_ID,
   brokers: [MESSAGE_BROKER_HOST as string]
 });
+
+CompressionCodecs[CompressionTypes.LZ4] = createLZ4Codec();
 
 const producer = kafka.producer();
 
@@ -27,11 +30,11 @@ export const init = async () => {
 };
 
 // Publish telemetry data to Kafka topic
-export const publish = async (payload: TelemetryData, useCompression: boolean = false) => {
+export const publish = async (payload: TelemetryData, compression: CompressionTypes = CompressionTypes.None) => {
   try {
     const result: RecordMetadata[] = await producer.send({
       topic: MESSAGE_BROKER_TOPIC as string,
-      compression: useCompression ? CompressionTypes.GZIP : CompressionTypes.None,
+      compression,
       messages: [{ value: JSON.stringify(payload), key: Buffer.from(DEVICE_ID as string) }]
     });
 
