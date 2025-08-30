@@ -38,7 +38,7 @@ import { test, expect, request, APIRequestContext } from '@playwright/test';
 const SENSOR_1_BASE_URL = 'http://localhost:5001';
 const SENSOR_2_BASE_URL = 'http://localhost:5002';
 const IOT_MANAGER_BASE_URL = 'http://localhost:6000';
-const MESSAGES_PER_SENSOR = 10000;
+const MESSAGES_PER_SENSOR = 100000;
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -65,8 +65,9 @@ const getNumberOfTopicMessages = async (context: APIRequestContext) => {
 };
 
 const scenarios = [
-  //{ compression: 'none', description: 'Publish Kafka messages without compression' },
+  { compression: 'none', description: 'Publish Kafka messages without compression' },
   { compression: 'lz4', description: 'Publish Kafka messages with compression (lz4)' },
+  { compression: 'gzip', description: 'Publish Kafka messages with compression (gzip)' },
 ];
 
 const testSummary: string[] = ['Kafka Integration Tests Summary:', ' '];

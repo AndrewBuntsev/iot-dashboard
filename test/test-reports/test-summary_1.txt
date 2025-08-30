@@ -3,21 +3,21 @@ Kafka Integration Tests Summary:
    Scenario: Publish Kafka messages without compression
  - Producer 1 published 100000 messages, Producer 2 published 100000 messages
  - Topic telemetry has 2 partitions
- - Consumed all messages with 1 consumer in 70277 ms
- - Consumed all messages with 2 consumers in 44789 ms
-------------------------------------------------------------
- 
-   Scenario: Publish Kafka messages with compression (lz4)
- - Producer 1 published 100000 messages, Producer 2 published 100000 messages
- - Topic telemetry has 2 partitions
- - Consumed all messages with 1 consumer in 142175 ms
- - Consumed all messages with 2 consumers in 119880 ms
+ - Consumed all messages with 1 consumer in 65838 ms
+ - Consumed all messages with 2 consumers in 44016 ms
 ------------------------------------------------------------
  
    Scenario: Publish Kafka messages with compression (gzip)
  - Producer 1 published 100000 messages, Producer 2 published 100000 messages
  - Topic telemetry has 2 partitions
- - Consumed all messages with 1 consumer in 98116 ms
- - Consumed all messages with 2 consumers in 60828 ms
+ - Consumed all messages with 1 consumer in 99553 ms
+ - Consumed all messages with 2 consumers in 64844 ms
+------------------------------------------------------------
+ 
+   Scenario: Publish Kafka messages with compression (lz4)
+ - Producer 1 published 100000 messages, Producer 2 published 100000 messages
+ - Topic telemetry has 2 partitions
+ - Consumed all messages with 1 consumer in 143422 ms
+ - Consumed all messages with 2 consumers in 117235 ms
 ------------------------------------------------------------
  

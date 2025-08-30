@@ -1,4 +1,5 @@
-import { Kafka, RecordMetadata, CompressionTypes, CompressionCodecs } from 'kafkajs';
+import kafkajs, { Kafka, RecordMetadata, CompressionTypes } from 'kafkajs';
+const { CompressionCodecs } = kafkajs;
 import { TelemetryData } from './types/telemetryData';
 import { createLZ4Codec } from './utils/kafka';
 

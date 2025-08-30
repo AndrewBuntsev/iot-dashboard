@@ -103,3 +103,10 @@ Now stop and restart the project:
 ```bash
 make down
 make up
+
+On Windows, couchbase/init.sh can cause issues due to CRT line endings. To fix this, ensure the script is using LF line endings instead of CRLF.
+Run the following command in Git Bash or WSL to convert the line endings:
+
+```bash
+dos2unix couchbase/init.sh
+```
