@@ -1,5 +1,5 @@
 import { CompressionTypes } from 'kafkajs';
-import { decode, encode } from 'lz4'
+import lz4 from 'lz4'
 
 
 // Convert string to actual CompressionTypes
@@ -18,21 +18,21 @@ export const getCompressionType = (type: string): CompressionTypes => {
   }
 };
 
-export const createLZ4Codec = () => {
-  const compress = (encoder: any) =>
-    new Promise(resolve => {
-      const compressedBuffer = encode(encoder.buffer, {})
-      resolve(compressedBuffer)
-    })
+export class KafkaJSLZ4 {
+  constructor(public readonly codec?: any) {
+    this.codec = () => {
+      return {
+        compress: this.compress,
+        decompress: this.decompress
+      };
+    };
+  }
 
-  const decompress = (buffer: Buffer) =>
-    new Promise(resolve => {
-      const decompressedBuffer = decode(buffer)
-      resolve(decompressedBuffer)
-    })
+  compress(encoder: any) {
+    return lz4.encode(encoder.buffer);
+  }
 
-  return () => ({
-    compress,
-    decompress
-  })
+  decompress(buffer: any) {
+    return lz4.decode(buffer);
+  }
 }

@@ -1,7 +1,7 @@
 import kafkajs, { Kafka, Consumer, CompressionTypes } from 'kafkajs';
 const { CompressionCodecs } = kafkajs;
 import { TelemetryData } from './types/telemetryData';
-import { createLZ4Codec } from './utils/kafka';
+import { KafkaJSLZ4 } from './utils/kafka';
 import { getConfig } from './config';
 
 const appConfig = getConfig();
@@ -13,7 +13,7 @@ const kafka = new Kafka({
 
 const admin = kafka.admin();
 const consumers: Consumer[] = [];
-CompressionCodecs[CompressionTypes.LZ4] = createLZ4Codec();
+CompressionCodecs[CompressionTypes.LZ4] = new KafkaJSLZ4().codec;
 
 
 // Initialize Kafka consumers to listen for telemetry messages

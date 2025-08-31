@@ -1,7 +1,7 @@
 import kafkajs, { Kafka, RecordMetadata, CompressionTypes } from 'kafkajs';
 const { CompressionCodecs } = kafkajs;
 import { TelemetryData } from './types/telemetryData';
-import { createLZ4Codec } from './utils/kafka';
+import { KafkaJSLZ4 } from './utils/kafka';
 
 const {
   MESSAGE_BROKER_HOST,
@@ -15,7 +15,7 @@ const kafka = new Kafka({
   brokers: [MESSAGE_BROKER_HOST as string]
 });
 
-CompressionCodecs[CompressionTypes.LZ4] = createLZ4Codec();
+CompressionCodecs[CompressionTypes.LZ4] = new KafkaJSLZ4().codec;
 
 const producer = kafka.producer();
 
